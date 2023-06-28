@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+  </head>
+  <body>
+    <!-- モーダルウィンドウ -->
+    <div id="modal_content">
+      <div class="loader-2"></div>
+    </div>
+    <div id="modal_overlay" onclick="checkModal()"></div>
+
+    <div id="container">
+      <h1>今日のぬえなぞ</h1>
+
+      <!-- 画像数を取得してflexで表示 -->
+      <div id="img_container">
+      <?
+        if(file_temp.length==0){
+          output.append('<p>今日の謎はまだ出題されていません。<p>')
+        }
+
+        for(i=0;i<file_temp.length;i++){
+          output.append('<div><img id="question" src="https://drive.google.com/uc?id=' + file_temp[i] + '&.png"></div>');
+        }
+      ?>
+      </div>
+
+      <!-- 正誤判定 -->
+      <div id="form_container">
+          <input id="form_input" type="text" name="answer" placeholder="解答を入力">
+          <input id="form_button" type="submit" value="解答" onclick="checkAnswer()">
+      </div>
+    
+      <!-- 時間になったときにヒントを追加 -->
+      <div id="ch_container">
+        <input type="radio" name="check" id="ch_check1" class="ch_check" checked="checked" onclick="updateInfo(0)">
+        <label id="ch_label1" class="ch_label" for="ch_check1">
+          <div>情報</div>
+        </label>
+        <input type="radio" name="check" id="ch_check2" class="ch_check" onclick="updateInfo(1)">
+        <label id="ch_label2" class="ch_label" for="ch_check2">
+          <div>ヒント1</div>
+        </label>
+        <input type="radio" name="check" id="ch_check3" class="ch_check" onclick="updateInfo(2)">
+        <label id="ch_label3" class="ch_label" for="ch_check3">
+          <div>ヒント2</div>
+        </label>
+        <input type="radio" name="check" id="ch_check4" class="ch_check" onclick="updateInfo(3)">
+        <label id="ch_label4" class="ch_label" for="ch_check4">
+          <div>ヒント3</div>
+        </label>
+      </div>
+
+      <div id="ch_contents">
+        <!-- ここにヒント等が入る -->
+      </div>
+
+      ※出題時・ヒント追加時は必要に応じて更新してください
+      
+    </div>
+    <?!= HtmlService.createHtmlOutputFromFile('js').getContent(); ?>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  </body>
+</html>
